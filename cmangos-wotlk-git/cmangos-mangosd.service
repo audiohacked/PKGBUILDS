@@ -3,9 +3,10 @@ Description=MaNGOS Daemon
 After=mysql.service
 
 [Service]
-ExecStart=/usr/bin/screen -DmS mangosd /srv/mangos/bin/mangosd -c /srv/mangos/etc/mangosd.conf
-ExecStop=/usr/bin/screen -S mangosd -X quit
+Type=forking
 User=mangos
+ExecStart=/usr/bin/screen -LdmS mangosd /srv/mangos/bin/mangosd -c /srv/mangos/etc/mangosd.conf
+ExecStop=/usr/bin/screen -S mangosd -X quit
 
 [Install]
 WantedBy=multi-user.target
