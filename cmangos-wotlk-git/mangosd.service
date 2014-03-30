@@ -1,0 +1,12 @@
+[Unit]
+Description=MaNGOS Daemon
+After=mysql.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/tmux new-session -d -s mangosd /srv/mangos/bin/mangosd -c /srv/mangos/etc/mangosd.conf
+User=mangos
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,12 @@
+[Unit]
+Description=MaNGOS Daemon for Realms
+After=mysql.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/tmux new-session -d -s realmd /srv/mangos/bin/realmd -c /srv/mangos/etc/realmd.conf
+User=mangos
+
+[Install]
+WantedBy=multi-user.target
+
