@@ -1,16 +1,16 @@
 # Maintainer: Sean Nelson <audiohacked@gmail.com>
-pkgname=cmangos-wotlk-git
+pkgname=cmangos-tbc-git
 pkgver=v0.17.r380.gf688401
 pkgrel=1
-pkgdesc="Continued MaNGOS"
+pkgdesc="Continued MaNGOS TBC"
 arch=('i686' 'x86_64')
-url="https://github.com/cmangos/mangos-wotlk"
+url="https://github.com/cmangos/mangos-tbc"
 license=('GPL2')
 depends=('pacman')
 makedepends=('git' 'cmake')
 conflicts=('cmangos')
 provides=('cmangos')
-source=("$pkgname"::'git://github.com/cmangos/mangos-wotlk.git'
+source=("$pkgname"::'git://github.com/cmangos/mangos-tbc.git'
 	"ScriptDev2"::'git://github.com/scriptdev2/scriptdev2.git')
 md5sums=('SKIP'
 	'SKIP')

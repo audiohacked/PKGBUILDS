@@ -1,0 +1,24 @@
+# Maintainer: Sean Nelson <audiohacked@gmail.com>
+pkgname=cmangos-database-ClassicDB-svn
+pkgver=20140329
+pkgrel=1
+pkgdesc="ClassicDB"
+arch=('i686' 'x86_64')
+url="http://svn.code.sf.net/p/udb434/code/"
+license=('GPL2')
+depends=('pacman')
+makedepends=('git' 'unzip')
+conflicts=('classicdb')
+provides=('classicdb')
+source=("$pkgname"::'git://github.com/classicdb/database.git')
+md5sums=('SKIP')
+
+prepare() {
+	unzip unifieddb/Full_DB/UDB_*.zip -d unifieddb/Full_DB/
+}
+
+build() {
+}
+
+package() {
+}
