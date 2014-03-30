@@ -1,0 +1,21 @@
+# Maintainer: Sean Nelson <audiohacked@gmail.com>
+
+pre_install() {
+	useradd -m -U -d /srv/mangos -c "MaNGOS" mangos
+}
+
+#post_install() {
+#}
+
+#pre_upgrade() {
+#}
+
+#post_upgrade() {
+#}
+
+#pre_remove() {
+#}
+
+#post_remove() {
+#}
+
