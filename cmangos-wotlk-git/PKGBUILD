@@ -1,6 +1,6 @@
 # Maintainer: Sean Nelson <audiohacked@gmail.com>
 pkgname=cmangos-wotlk-git
-pkgver=v0.17.r380.gf688401
+pkgver=v0.17.r381.gfb81def
 pkgrel=1
 pkgdesc="Continued MaNGOS WotLK"
 arch=('i686' 'x86_64')
@@ -15,10 +15,6 @@ source=("$pkgname"::'git://github.com/cmangos/mangos-wotlk.git'
 	"ScriptDev2"::'git://github.com/scriptdev2/scriptdev2.git')
 md5sums=('SKIP'
 	'SKIP')
-
-_sqlinstalldir="${pkgdir}/srv/mangos/sql"
-_cmangosdir="${srcdir}/${pkgname}"
-_scriptsdir="${srcdir}/${pkgname}/src/bindings/ScriptDev2"
 
 pkgver() {
   cd "${srcdir}/${pkgname}"
@@ -41,11 +37,15 @@ build() {
 }
 
 package() {
+	_sqlinstalldir="${pkgdir}/srv/mangos/sql"
+	_cmangosdir="${srcdir}/${pkgname}"
+	_scriptsdir="${srcdir}/${pkgname}/src/bindings/ScriptDev2"
+
 	cd "${srcdir}/build"
 	make DISTDIR="${pkgdir}" install
 
-	install -Dm644 "cmangos-mangosd.service" "${pkgdir}/usr/lib/systemd/system/mangosd.service"
-	install -Dm644 "cmangos-realmd.service" "${pkgdir}/usr/lib/systemd/system/realmd.service"
+	install -Dm644 "${startdir}/cmangos-mangosd.service" "${pkgdir}/usr/lib/systemd/system/mangosd.service"
+	install -Dm644 "${startdir}/cmangos-realmd.service" "${pkgdir}/usr/lib/systemd/system/realmd.service"
 
 	install -Dm644 "${_cmangosdir}/sql/create_mysql.sql" \
 		"${pkgdir}/srv/mangos/sql/cmangos_000.sql"

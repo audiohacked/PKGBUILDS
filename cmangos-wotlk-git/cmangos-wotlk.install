@@ -4,18 +4,23 @@ pre_install() {
 	useradd -m -U -d /srv/mangos -c "MaNGOS" mangos
 }
 
-#post_install() {
-#}
+post_install() {
+	echo "Remember to install UnifiedDB or another DB!"
+}
 
-#pre_upgrade() {
-#}
+pre_upgrade() {
+	echo
+}
 
-#post_upgrade() {
-#}
+post_upgrade() {
+	systemctl daemon-reload
+}
 
-#pre_remove() {
-#}
+pre_remove() {
+	echo
+}
 
-#post_remove() {
-#}
+post_remove() {
+	userdel mangos
+}
 

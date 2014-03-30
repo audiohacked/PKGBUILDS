@@ -3,8 +3,8 @@ Description=MaNGOS Daemon
 After=mysql.service
 
 [Service]
-Type=oneshot
-ExecStart=/usr/bin/tmux new-session -d -s mangosd /srv/mangos/bin/mangosd -c /srv/mangos/etc/mangosd.conf
+ExecStart=/usr/bin/screen -DmS mangosd /srv/mangos/bin/mangosd -c /srv/mangos/etc/mangosd.conf
+ExecStop=/usr/bin/screen -S mangosd -X quit
 User=mangos
 
 [Install]
