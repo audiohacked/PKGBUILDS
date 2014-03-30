@@ -1,0 +1,41 @@
+# Maintainer: Sean Nelson <audiohacked@gmail.com>
+pkgname=cmangos-wotlk-git
+pkgver=v0.17.r380.gf688401
+pkgrel=1
+pkgdesc="Continued MaNGOS"
+arch=('i686' 'x86_64')
+url="https://github.com/cmangos/mangos-wotlk"
+license=('GPL2')
+depends=('pacman')
+makedepends=('git' 'cmake')
+conflicts=('cmangos')
+provides=('cmangos')
+source=("$pkgname"::'git://github.com/cmangos/mangos-wotlk.git'
+	"ScriptDev2"::'git://github.com/scriptdev2/scriptdev2.git')
+md5sums=('SKIP'
+	'SKIP')
+
+pkgver() {
+  cd "${srcdir}/${pkgname}"
+  # Use the tag of the last commit
+  git describe --long | sed -E 's/([^-]*-g)/r\1/;s/-/./g'
+}
+
+prepare() {
+	cd "${srcdir}/${pkgname}/src/bindings"
+	git submodule add -f ${srcdir}/ScriptDev2 ScriptDev2
+
+	mkdir -p "${srcdir}/build"
+	cd "${srcdir}/build"
+	cmake "${srcdir}/${pkgname}" -DCMAKE_INSTALL_PREFIX=${pkgdir}/srv/mangos -DDEBUG=0 -DINCLUDE_BINDINGS_DIR=ScriptDev2
+}
+
+build() {
+	cd "${srcdir}/build"
+	make
+}
+
+package() {
+	cd "${srcdir}/build"
+	make install
+}
