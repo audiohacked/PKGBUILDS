@@ -6,7 +6,7 @@ pkgdesc="Continued MaNGOS"
 arch=('i686' 'x86_64')
 url="https://github.com/cmangos/mangos-wotlk"
 license=('GPL2')
-depends=('pacman')
+depends=('pacman' 'mysql')
 makedepends=('git' 'cmake')
 conflicts=('cmangos')
 provides=('cmangos')
@@ -14,6 +14,10 @@ source=("$pkgname"::'git://github.com/cmangos/mangos-wotlk.git'
 	"ScriptDev2"::'git://github.com/scriptdev2/scriptdev2.git')
 md5sums=('SKIP'
 	'SKIP')
+
+_sqlinstalldir="${pkgdir}/srv/mangos/sql"
+_cmangosdir="${srcdir}/${pkgname}"
+_scriptsdir="${srcdir}/${pkgname}/src/bindings/ScriptDev2"
 
 pkgver() {
   cd "${srcdir}/${pkgname}"
@@ -27,7 +31,7 @@ prepare() {
 
 	mkdir -p "${srcdir}/build"
 	cd "${srcdir}/build"
-	cmake "${srcdir}/${pkgname}" -DCMAKE_INSTALL_PREFIX=${pkgdir}/srv/mangos -DDEBUG=0 -DINCLUDE_BINDINGS_DIR=ScriptDev2
+	cmake "${srcdir}/${pkgname}" -DCMAKE_INSTALL_PREFIX=/srv/mangos -DINCLUDE_BINDINGS_DIR=ScriptDev2
 }
 
 build() {
@@ -37,5 +41,27 @@ build() {
 
 package() {
 	cd "${srcdir}/build"
-	make install
+	make DISTDIR="${pkgdir}" install
+
+	install -Dm644 "${_cmangosdir}/sql/create_mysql.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_000.sql"
+
+	install -Dm644 "${_scriptsdir}/sql/scriptdev2_create_database.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_001.sql"
+
+	install -Dm644 "${_scriptsdir}/sql/scriptdev2_create_structure_mysql.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_002.sql"
+
+	install -Dm644 "${_cmangosdir}/sql/mangos.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_003.sql"
+
+	install -Dm644 "${_cmangosdir}/sql/characters.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_004.sql"
+
+	install -Dm644 "${_cmangosdir}/sql/realmd.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_005.sql"
+
+	install -Dm644 "${_scriptsdir}/sql/scriptdev2_script_full.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_101.sql"
+
 }
