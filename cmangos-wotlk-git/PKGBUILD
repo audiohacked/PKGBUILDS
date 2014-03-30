@@ -2,7 +2,7 @@
 pkgname=cmangos-wotlk-git
 pkgver=v0.17.r380.gf688401
 pkgrel=1
-pkgdesc="Continued MaNGOS"
+pkgdesc="Continued MaNGOS WotLK"
 arch=('i686' 'x86_64')
 url="https://github.com/cmangos/mangos-wotlk"
 license=('GPL2')
