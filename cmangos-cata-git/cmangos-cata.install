@@ -1,0 +1,26 @@
+# Maintainer: Sean Nelson <audiohacked@gmail.com>
+
+pre_install() {
+	useradd -m -U -d /srv/mangos -c "MaNGOS" mangos
+}
+
+post_install() {
+	echo "Remember to install UnifiedDB or another DB!"
+}
+
+pre_upgrade() {
+	echo
+}
+
+post_upgrade() {
+	systemctl daemon-reload
+}
+
+pre_remove() {
+	echo
+}
+
+post_remove() {
+	userdel mangos
+}
+

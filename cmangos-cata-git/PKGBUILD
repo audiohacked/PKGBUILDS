@@ -1,17 +1,18 @@
 # Maintainer: Sean Nelson <audiohacked@gmail.com>
 pkgname=cmangos-cata-git
-pkgver=v0.17.r380.gf688401
+pkgver=v0.17.r381.gfb81def
 pkgrel=1
-pkgdesc="Continued MaNGOS Cata"
+pkgdesc="Continued MaNGOS Cataclysm"
 arch=('i686' 'x86_64')
 url="https://github.com/cmangos/mangos-cata"
 license=('GPL2')
-depends=('pacman')
+depends=('pacman' 'mysql')
 makedepends=('git' 'cmake')
 conflicts=('cmangos')
 provides=('cmangos')
+install=cmangos-cata.install
 source=("$pkgname"::'git://github.com/cmangos/mangos-cata.git'
-	"ScriptDev2"::'git://github.com/scriptdev2/scriptdev2.git')
+	"ScriptDev2"::'git://github.com/scriptdev2/scriptdev2-cata.git')
 md5sums=('SKIP'
 	'SKIP')
 
@@ -27,7 +28,7 @@ prepare() {
 
 	mkdir -p "${srcdir}/build"
 	cd "${srcdir}/build"
-	cmake "${srcdir}/${pkgname}" -DCMAKE_INSTALL_PREFIX=${pkgdir}/srv/mangos -DDEBUG=0 -DINCLUDE_BINDINGS_DIR=ScriptDev2
+	cmake "${srcdir}/${pkgname}" -DCMAKE_INSTALL_PREFIX=/srv/mangos -DINCLUDE_BINDINGS_DIR=ScriptDev2
 }
 
 build() {
@@ -36,6 +37,35 @@ build() {
 }
 
 package() {
+	_sqlinstalldir="${pkgdir}/srv/mangos/sql"
+	_cmangosdir="${srcdir}/${pkgname}"
+	_scriptsdir="${srcdir}/${pkgname}/src/bindings/ScriptDev2"
+
 	cd "${srcdir}/build"
-	make install
+	make DISTDIR="${pkgdir}" install
+
+	install -Dm644 "${startdir}/cmangos-mangosd.service" "${pkgdir}/usr/lib/systemd/system/mangosd.service"
+	install -Dm644 "${startdir}/cmangos-realmd.service" "${pkgdir}/usr/lib/systemd/system/realmd.service"
+
+	install -Dm644 "${_cmangosdir}/sql/create_mysql.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_01_000.sql"
+
+	install -Dm644 "${_scriptsdir}/sql/scriptdev2_create_database.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_01_001.sql"
+
+	install -Dm644 "${_scriptsdir}/sql/scriptdev2_create_structure_mysql.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_01_002.sql"
+
+	install -Dm644 "${_cmangosdir}/sql/mangos.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_01_003.sql"
+
+	install -Dm644 "${_cmangosdir}/sql/characters.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_01_004.sql"
+
+	install -Dm644 "${_cmangosdir}/sql/realmd.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_01_005.sql"
+
+	install -Dm644 "${_scriptsdir}/sql/scriptdev2_script_full.sql" \
+		"${pkgdir}/srv/mangos/sql/cmangos_02_001.sql"
+
 }
