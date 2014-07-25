@@ -1,0 +1,30 @@
+# Maintainer: Vincent Post <vincent.post@w1r3.net>
+# GitHub: https://github.com/w1r3/archlinux-packages
+# Precompiled Packages: http://repo.w1r3.org
+
+pkgname=craftbukkit-stable
+pkgver=1.6.4r2.0
+pkgrel=4
+pkgdesc="Minecraft server implementing the Bukkit API (stable)"
+arch=(any)
+url="http://bukkit.org"
+license=("LGPL")
+depends=(java-runtime tmux sudo)
+conflicts=(craftbukkit-stable)
+provides=("craftbukkit-stable=1.6.4r2.0")
+install=craftbukkit.install
+source=("http://dl.bukkit.org/downloads/craftbukkit/get/02389_1.6.4-R2.0/craftbukkit.jar"
+"craftbukkit.service"
+"craftbukkit.sh")
+noextract=("craftbukkit.jar")
+
+package() {
+  install -Dm644 "$srcdir/craftbukkit.jar" "$pkgdir/srv/craftbukkit-stable/craftbukkit.jar"
+  install -m755 "$srcdir/craftbukkit.sh" "$pkgdir/srv/craftbukkit-stable/craftbukkit.sh"
+  install -Dm644 "$srcdir/craftbukkit.service" "$pkgdir/usr/lib/systemd/system/craftbukkit-stable.service"
+}
+
+# vim:set ts=2 sw=2 et:
+md5sums=('5c3d125265a806e842fe97625658fb1c'
+         'a40dec75f7b0cc3e690a19878a68adcb'
+         'f95b3c10922f08937c9dd3e30662ecf3')

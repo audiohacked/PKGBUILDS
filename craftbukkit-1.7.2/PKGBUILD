@@ -1,0 +1,31 @@
+# Maintainer: Vincent Post <vincent.post@w1r3.net>
+# https://github.com/w1r3/archlinux-packages
+# http://dl.bukkit.org/downloads/craftbukkit/get/02543_1.7.2-R0.4/craftbukkit-dev.jar
+
+pkgname=craftbukkit-1.7.2
+pkgver=r0.4
+_pkgver=02543_1.7.2-R0.4
+pkgrel=4
+pkgdesc="Minecraft server implementing the Bukkit API (latest 1.7.2)"
+arch=(any)
+url="http://bukkit.org"
+license=("LGPL")
+depends=('java-runtime-headless'
+         'tmux'
+         'sudo')
+conflicts=(craftbukkit-1.7.2)
+provides=('craftbukkit-1.7.2=${pkgver}')
+install=craftbukkit.install
+source=("http://dl.bukkit.org/downloads/craftbukkit/get/${_pkgver}/craftbukkit-dev.jar"
+        'craftbukkit.service'
+        'craftbukkit.sh')
+noextract=("craftbukkit-dev.jar")
+
+package() {
+  install -Dm644 "${srcdir}/craftbukkit-dev.jar" "${pkgdir}/srv/craftbukkit-1.7.2/craftbukkit.jar"
+  install -m755 "${srcdir}/craftbukkit.sh" "${pkgdir}/srv/craftbukkit-1.7.2/craftbukkit.sh"
+  install -Dm644 "${srcdir}/craftbukkit.service" "${pkgdir}/usr/lib/systemd/system/craftbukkit-1.7.2.service"
+}
+md5sums=('d3658e85c35caea82a94eeba2e4376a9'
+         'a7c31dd87bbee9fdadcd0d3dc52baf51'
+         '25a4e042c294247392c3dba772b26725')

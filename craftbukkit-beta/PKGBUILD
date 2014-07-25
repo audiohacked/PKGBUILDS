@@ -1,0 +1,30 @@
+# Maintainer: Vincent Post <vincent.post@w1r3.net>
+# https://github.com/w1r3/archlinux-packages
+
+pkgname=craftbukkit-beta
+pkgver=1.7.9r0.2
+_pkgver=02631_1.7.9-R0.2
+pkgrel=1
+pkgdesc="Minecraft server implementing the Bukkit API (beta)"
+arch=(any)
+url="http://bukkit.org"
+license=("LGPL")
+depends=('java-runtime-headless'
+         'tmux'
+         'sudo')
+conflicts=('craftbukkit-beta')
+provides=('craftbukkit-beta=${pkgver}')
+install=craftbukkit.install
+source=("http://dl.bukkit.org/downloads/craftbukkit/get/${_pkgver}/${pkgname}.jar"
+        'craftbukkit.service'
+        'craftbukkit.sh')
+noextract=("craftbukkit-beta.jar")
+
+package() {
+  install -Dm644 "${srcdir}/craftbukkit-beta.jar" "${pkgdir}/srv/craftbukkit-beta/craftbukkit.jar"
+  install -m755 "${srcdir}/craftbukkit.sh" "${pkgdir}/srv/craftbukkit-beta/craftbukkit.sh"
+  install -Dm644 "${srcdir}/craftbukkit.service" "${pkgdir}/usr/lib/systemd/system/craftbukkit-beta.service"
+}
+md5sums=('6e466c1a74a698ef3b4abaeeaf7ba037'
+         '6b2205d6cd922070c4afdd71cd94f1f3'
+         '434cb6787ba2ee6d5def8e225ff398f6')

@@ -1,0 +1,30 @@
+# Maintainer: Vincent Post <vincent.post@w1r3.net>
+# https://github.com/w1r3/archlinux-packages
+
+pkgname=craftbukkit
+pkgver=1.7.10r0.1
+_pkgver=02646_1.7.10-R0.1
+pkgrel=1
+pkgdesc="Minecraft server implementing the Bukkit API"
+arch=(any)
+url="http://bukkit.org"
+license=("LGPL")
+depends=('java-runtime-headless'
+         'tmux'
+         'sudo')
+conflicts=(craftbukkit)
+provides=('craftbukkit=${pkgver}')
+install=craftbukkit.install
+source=("http://dl.bukkit.org/downloads/${pkgname}/get/${_pkgver}/${pkgname}-dev.jar"
+        'craftbukkit.service'
+        'craftbukkit.sh')
+noextract=("craftbukkit-dev.jar")
+
+package() {
+  install -Dm644 "${srcdir}/craftbukkit-dev.jar" "${pkgdir}/srv/craftbukkit/craftbukkit.jar"
+  install -m755 "${srcdir}/craftbukkit.sh" "${pkgdir}/srv/craftbukkit/craftbukkit.sh"
+  install -Dm644 "${srcdir}/craftbukkit.service" "${pkgdir}/usr/lib/systemd/system/craftbukkit.service"
+}
+md5sums=('fc9390a52af3ec2e0b0d9dbc3e2f4cf1'
+         '0ba6b038ca1b04ef1e4f2746e3011a71'
+         'a7e343ae0ac6af254542c03abfc0c17c')

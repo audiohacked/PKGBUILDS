@@ -1,0 +1,10 @@
+[Unit]
+Description=Minecraft server implementing the Bukkit API
+
+[Service]
+ExecStart=/srv/craftbukkit-1.7.2/craftbukkit.sh start
+ExecStop=/srv/craftbukkit-1.7.2/craftbukkit.sh stop
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
