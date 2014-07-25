@@ -25,6 +25,6 @@ package() {
   install -m755 "${srcdir}/craftbukkit.sh" "${pkgdir}/srv/craftbukkit-beta/craftbukkit.sh"
   install -Dm644 "${srcdir}/craftbukkit.service" "${pkgdir}/usr/lib/systemd/system/craftbukkit-beta.service"
 }
-md5sums=('6e466c1a74a698ef3b4abaeeaf7ba037'
+md5sums=('785456151f3b2ed2ecb1a8a21928692f'
          '6b2205d6cd922070c4afdd71cd94f1f3'
          '434cb6787ba2ee6d5def8e225ff398f6')
