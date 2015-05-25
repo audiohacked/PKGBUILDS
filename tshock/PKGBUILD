@@ -1,0 +1,36 @@
+# Maintainer: Vincent Post <vincent.post@w1r3.net>
+
+pkgname=tshock
+pkgver=4.2.10
+# Because of tag 4.2200 is 4.2.2.1228 and tag 4.2202 is 4.2.2.0224 epoch must be 1
+#epoch=1
+pkgrel=1
+pkgdesc="A Terraria Server administration modification that runs on the open source TerrariaAPI."
+arch=(any)
+url="http://tshock.co/xf/"
+license=("GPL")
+depends=('tmux'
+         'mono')
+source=("https://github.com/NyxStudios/TShock/releases/download/v${pkgver}/tshock_${pkgver}.zip"
+        'tshock.sh'
+        'tshock.install'
+        'tshock.service')
+
+
+install=tshock.install
+backup=('srv/tshock/tshock.sh')
+
+package() {
+  install -d "${pkgdir}/srv/tshock/ServerPlugins/"
+
+  install -Dm744 "${srcdir}/tshock.sh" "${pkgdir}/srv/tshock/"
+  install -Dm644 "${srcdir}/tshock.service" "${pkgdir}/usr/lib/systemd/system/tshock.service"
+
+  install -Dm644 "${srcdir}/ServerPlugins"/* "${pkgdir}/srv/tshock/ServerPlugins/"
+  install -Dm644 "${srcdir}/sqlite3.dll" "${pkgdir}/srv/tshock/"
+  install -Dm644 "${srcdir}/TerrariaServer.exe" "${pkgdir}/srv/tshock/"
+}
+md5sums=('2c588e09167e30e7c0d1d37f53542bfa'
+         '7ceabe6f7754d49eca95da17c3a035df'
+         '32fcec3a790b58268cbe80e7586581a1'
+         '185b2295cf57f3269cff5988862242dc')
