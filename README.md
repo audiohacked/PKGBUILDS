@@ -11,3 +11,6 @@ These packages are modified from the AUR versions in that you can run multiple v
 Craftbukkit-1.7.2 only exists because my first install was version 1.7.2 and I use it for my data and plugins that 
 only support version 1.7.2.
 
+TShock is a modified Terraria Server. Source code is at [github](https://github.com/NyxStudios/TShock) and the Main website at [tshock.co](https://tshock.co/).
+
+
