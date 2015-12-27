@@ -40,6 +40,10 @@ optdepends=(
     'http-parser'
 )
 
+provides=('jabberd')
+
+conflicts=('jabberd14')
+
 source=(
     "https://github.com/jabberd2/jabberd2/releases/download/jabberd-${pkgver}/jabberd-${pkgver}.tar.xz"
     'jabberd2.install'
