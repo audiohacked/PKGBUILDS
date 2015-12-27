@@ -51,7 +51,15 @@ source=(
 
 install=jabberd2.install
 
-# backup=('etc/jabberd2')
+backup=(
+    'etc/jabberd2/c2s.xml'
+    'etc/jabberd2/router-filter.xml'
+    'etc/jabberd2/router-users.xml'
+    'etc/jabberd2/router.xml'
+    'etc/jabberd2/s2s.xml'
+    'etc/jabberd2/sm.xml'
+    'etc/jabberd2/templates/roster.xml'
+)
 
 build() {
     cd $pkgbase-$pkgver
