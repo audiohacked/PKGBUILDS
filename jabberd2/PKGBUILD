@@ -43,7 +43,6 @@ optdepends=(
 source=(
     "https://github.com/jabberd2/jabberd2/releases/download/jabberd-${pkgver}/jabberd-${pkgver}.tar.xz"
     'jabberd2.install'
-    'jabberd2.service'
 )
 
 install=jabberd2.install
