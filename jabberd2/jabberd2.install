@@ -1,8 +1,9 @@
 post_install() {
-  getent group jabberd >/dev/null 2>&1 || groupadd jabberd 
-  getent passwd jabberd >/dev/null 2>&1 || useradd -g jabberd -d /var/lib/jabberd2 jabberd
-  chown -R tshock:tshock /srv/tshock/
-
+	getent group jabberd >/dev/null 2>&1 || groupadd jabberd 
+	getent passwd jabberd >/dev/null 2>&1 || useradd -g jabberd -d /var/lib/jabberd2 jabberd
+	chown -R jabber:jabber var/log/jabberd2
+	chown -R jabber:jabber var/lib/jabberd2
+	chown -R root:jabber etc/jabberd2
 }
 
 post_upgrade() {
