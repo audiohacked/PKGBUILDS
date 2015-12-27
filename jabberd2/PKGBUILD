@@ -75,9 +75,6 @@ package() {
     cd $pkgbase-$pkgver
 
     make DESTDIR="$pkgdir" install
-
-    install -Dm644 $srcdir/sysuser.conf "$pkgdir"/usr/lib/sysusers.d/jabberd2.conf
-
 }
 md5sums=('8b7d76224b7ea62d5169065fa0879c83'
          '26d15b877b4ff9cb2f4b03ba19940dc8')
