@@ -1,9 +1,9 @@
 post_install() {
-	getent group jabberd >/dev/null 2>&1 || groupadd jabberd 
-	getent passwd jabberd >/dev/null 2>&1 || useradd -g jabberd -d /var/lib/jabberd2 jabberd
-	chown -R jabber:jabber var/log/jabberd2
-	chown -R jabber:jabber var/lib/jabberd2
-	chown -R root:jabber etc/jabberd2
+    getent group jabber &>/dev/null || groupadd -r jabber >/dev/null
+    getent passwd jabber &>/dev/null || useradd -r -g jabber -d /etc/jabberd2 -s /bin/false -c jabber jabber >/dev/null
+    mkdir -p var/lib/jabberd/{db,log,pid}
+    chown -R jabber:jabber var/lib/jabberd
+    chown -R root:jabber etc/jabberd2
 }
 
 post_upgrade() {

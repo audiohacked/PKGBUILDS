@@ -43,6 +43,7 @@ optdepends=(
 source=(
     "https://github.com/jabberd2/jabberd2/releases/download/jabberd-${pkgver}/jabberd-${pkgver}.tar.xz"
     'jabberd2.install'
+    'sysuser.conf'
 )
 
 install=jabberd2.install
@@ -54,6 +55,7 @@ build() {
     ./configure \
         --prefix=/usr \
         --sysconfdir=/etc/jabberd2 \
+	--localstatedir=/var/lib \
         --program-prefix=jabberd2- \
         --enable-ssl \
         --enable-mysql \
@@ -74,6 +76,10 @@ package() {
     cd $pkgbase-$pkgver
 
     make DESTDIR="$pkgdir" install
+
+    install -Dm644 $srcdir/sysuser.conf "$pkgdir"/usr/lib/sysusers.d/jabberd2.conf
+
 }
 md5sums=('8b7d76224b7ea62d5169065fa0879c83'
-         '7d61f71cc6876a07a8098e41083acb33')
+         'd2716a924c95b340b2bdc2fa9da33adc'
+         '7eba015d39ae9aa4ef40ab931443a826')
