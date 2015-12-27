@@ -1,0 +1,20 @@
+post_install() {
+  getent group jabberd >/dev/null 2>&1 || groupadd jabberd 
+  getent passwd jabberd >/dev/null 2>&1 || useradd -g jabberd -d /var/lib/jabberd2 jabberd
+  chown -R tshock:tshock /srv/tshock/
+
+}
+
+post_upgrade() {
+  post_install $1
+}
+
+post_remove() {
+  if getent passwd jabberd >/dev/null 2>&1; then
+    userdel jabberd
+  fi
+  if getent group jabberd >/dev/null 2>&1; then
+    groupdel jabberd
+  fi
+}
+

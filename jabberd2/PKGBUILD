@@ -1,0 +1,79 @@
+# Maintainer: Sean Nelson <audiohacked@gmail.com>
+
+pkgbase=jabberd
+pkgname=jabberd2
+pkgver=2.3.4
+pkgrel=1
+pkgdesc="Jabber (XMPP) Server"
+arch=(any)
+url="http://github.com/jabberd2/jabberd2"
+license=("GPL")
+depends=(
+    'expat'
+    'gsasl'
+    'udns'
+)
+
+makedepends=(
+    'libidn'
+    'openssl'
+    'zlib'
+    'db'
+    'openldap'
+    'postgresql'
+    'mariadb'
+    'pam'
+    'sqlite'
+    'http-parser'
+)
+
+optdepends=(
+    'libidn: needed for JID canonicalisation'
+    'openssl: needed for SSL/TLS support'
+    'zlib: needed for stream compression'
+    'db: Berkley DB support'
+    'openldap: LDAP support'
+    'postgresql: PostgreSQL support'
+    'mariadb: MySQL support'
+    'pam: Linux PAM support'
+    'sqlite: SQLite support'
+    'http-parser'
+)
+
+source=(
+    "https://github.com/jabberd2/jabberd2/releases/download/jabberd-${pkgver}/jabberd-${pkgver}.tar.xz"
+    'jabberd2.install'
+    'jabberd2.service'
+)
+
+install=jabberd2.install
+
+# backup=('etc/jabberd2')
+
+build() {
+    cd $pkgbase-$pkgver
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/sbin \
+        --sysconfdir=/etc/jabberd2 \
+        --program-prefix=jabberd2- \
+        --enable-ssl \
+        --enable-mysql \
+        --enable-pgsql \
+        --enable-sqlite \
+        --enable-db \
+        --enable-ldap \
+        --enable-pam \
+        --enable-pipe \
+        --enable-anon \
+        --enable-fs \
+        --enable-websocket \
+        --without-subst
+    make
+}
+
+package() {
+    cd $pkgbase-$pkgver
+
+    make DESTDIR="$pkgdir" install
+}
