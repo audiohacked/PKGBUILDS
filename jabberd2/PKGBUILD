@@ -43,7 +43,6 @@ optdepends=(
 source=(
     "https://github.com/jabberd2/jabberd2/releases/download/jabberd-${pkgver}/jabberd-${pkgver}.tar.xz"
     'jabberd2.install'
-    'sysuser.conf'
 )
 
 install=jabberd2.install
@@ -81,5 +80,4 @@ package() {
 
 }
 md5sums=('8b7d76224b7ea62d5169065fa0879c83'
-         'd2716a924c95b340b2bdc2fa9da33adc'
-         '7eba015d39ae9aa4ef40ab931443a826')
+         '26d15b877b4ff9cb2f4b03ba19940dc8')
