@@ -1,72 +1,55 @@
 # Maintainer: Sean Nelson <audiohacked@gmail.com>
 
-pkgbase=jabberd
 pkgname=jabberd2
+pkgbase=jabberd
 pkgver=2.3.4
 pkgrel=1
 pkgdesc="Jabber (XMPP) Server"
-arch=('i686' 'x86_64')
 url="http://github.com/jabberd2/jabberd2"
+arch=('i686' 'x86_64')
 license=("GPL")
-depends=(
-    'expat'
-    'gsasl'
-    'udns'
-)
-
-makedepends=(
-    'libidn'
-    'openssl'
-    'zlib'
-    'db'
-    'openldap'
-    'postgresql'
-    'mariadb'
-    'pam'
-    'sqlite'
-    'http-parser'
-)
-
-optdepends=(
-    'libidn: needed for JID canonicalisation'
-    'openssl: needed for SSL/TLS support'
-    'zlib: needed for stream compression'
-    'db: Berkley DB support'
-    'openldap: LDAP support'
-    'postgresql: PostgreSQL support'
-    'mariadb: MySQL support'
-    'pam: Linux PAM support'
-    'sqlite: SQLite support'
-    'http-parser'
-)
-
-provides=('jabberd')
-
+depends=('expat' 'gsasl' 'udns')
+optdepends=('libidn: needed for JID canonicalisation'
+            'openssl: needed for SSL/TLS support'
+            'zlib: needed for stream compression'
+            'db: Berkley DB support'
+            'openldap: LDAP support'
+            'postgresql: PostgreSQL support'
+            'mariadb: MySQL support'
+            'pam: Linux PAM support'
+            'sqlite: SQLite support'
+            'http-parser')
+makedepends=('libidn'
+            'openssl'
+            'zlib'
+            'db'
+            'openldap'
+            'postgresql'
+            'mariadb'
+            'pam'
+            'sqlite'
+            'http-parser')
 conflicts=('jabberd14')
-
-source=(
-    "https://github.com/jabberd2/jabberd2/releases/download/jabberd-${pkgver}/jabberd-${pkgver}.tar.xz"
-    'jabberd2.install'
-)
-
-install=jabberd2.install
-
-backup=(
-    'etc/jabberd2/c2s.xml'
-    'etc/jabberd2/router-filter.xml'
-    'etc/jabberd2/router-users.xml'
-    'etc/jabberd2/router.xml'
-    'etc/jabberd2/s2s.xml'
-    'etc/jabberd2/sm.xml'
-    'etc/jabberd2/templates/roster.xml'
-)
+provides=('jabberd')
+backup=('etc/jabberd2/c2s.xml'
+        'etc/jabberd2/router-filter.xml'
+        'etc/jabberd2/router-users.xml'
+        'etc/jabberd2/router.xml'
+        'etc/jabberd2/s2s.xml'
+        'etc/jabberd2/sm.xml'
+        'etc/jabberd2/templates/roster.xml')
+install='jabberd2.install'
+source=("https://github.com/jabberd2/jabberd2/releases/download/jabberd-${pkgver}/jabberd-${pkgver}.tar.xz"
+        'jabberd2.install')
+md5sums=('8b7d76224b7ea62d5169065fa0879c83'
+         '26d15b877b4ff9cb2f4b03ba19940dc8')
 
 build() {
-    cd $pkgbase-$pkgver
+    cd "${srcdir}/${pkgbase}-${pkgver}"
     ./configure \
         --prefix=/usr \
         --sysconfdir=/etc/jabberd2 \
-	--localstatedir=/var/lib \
+        --localstatedir=/var/lib \
         --program-prefix=jabberd2- \
         --enable-ssl \
         --enable-mysql \
@@ -84,9 +67,8 @@ build() {
 }
 
 package() {
-    cd $pkgbase-$pkgver
-
-    make DESTDIR="$pkgdir" install
+    cd "${srcdir}/${pkgbase}-${pkgver}"
+    make DESTDIR="${pkgdir}" install
+    install -Dm644 tools/db-setup.* "${pkgdir}/usr/share/${pkgname}/db-setup.mysql"
+    install -Dm644 tools/db-update.* "${pkgdir}/usr/share/${pkgname}/db-setup.oracle"
 }
-md5sums=('8b7d76224b7ea62d5169065fa0879c83'
-         '26d15b877b4ff9cb2f4b03ba19940dc8')
