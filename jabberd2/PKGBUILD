@@ -69,6 +69,7 @@ build() {
 package() {
     cd "${srcdir}/${pkgbase}-${pkgver}"
     make DESTDIR="${pkgdir}" install
-    install -Dm644 tools/db-setup.* "${pkgdir}/usr/share/${pkgname}/db-setup.mysql"
-    install -Dm644 tools/db-update.* "${pkgdir}/usr/share/${pkgname}/db-setup.oracle"
+    mkdir -p "${pkgdir}/usr/share/${pkgname}"
+    install -Dm644 tools/db-setup.* "${pkgdir}/usr/share/${pkgname}"
+    install -Dm644 tools/db-update.* "${pkgdir}/usr/share/${pkgname}"
 }
